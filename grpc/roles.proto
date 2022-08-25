@@ -1,0 +1,163 @@
+import "google/protobuf/empty.proto";
+syntax="proto3";
+
+package roleManagement;
+
+service RoleManagement{
+    // rpc CreateAction(actionRequest) returns (actionResponse);
+    // rpc GetAction(google.protobuf.Empty) returns (getActions);
+    rpc CreateRole(RoleRequest) returns (RoleResponse);
+    rpc GetRole(google.protobuf.Empty) returns (GetRole);
+    // rpc CreateProduct(ProductRequest) returns (ProductResponse);
+    // rpc GetProduct(google.protobuf.Empty) returns (GetProduct);
+    rpc GetRoleById(GetRoleByIdRequest) returns (GetRoleByIdResponse);
+    rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse);
+    rpc CreateUser(UserRequest) returns (UserResponse);
+    rpc GetUser(google.protobuf.Empty) returns (GetUser);
+    rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse);
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+    //rpc AssignPermission(assignedPermissionReq) returns (assignedPermissionRes);
+}
+
+// message actionRequest{
+//     string actionName=1;
+//     string entryBy=2;
+//     string lastUpdatedBy=3; 
+// }
+
+// message actionResponse{
+//     string actionName=1;
+//     string entryBy=2;
+//     string lastUpdatedBy=3;
+//     string entryDate=4;
+//     string lastUpdatedDate=5;   
+//     int32 id = 6;
+// }
+
+
+// message getActions{
+//     repeated actionResponse getActions = 1;
+// }
+
+message RoleRequest{
+string role_name=1;
+string role_desc=2;
+bool role_status=3;
+bool is_global=4;
+}
+message RoleResponse{
+int32 id=1;
+string role_name=2;
+string role_desc=3;
+bool role_status=4;
+bool is_global=5;
+}
+
+message GetRole{
+    repeated RoleResponse GetRole=1;
+}
+
+// message ProductRequest{
+//     string productName=1;
+//     string productCode=2;
+//     string productDesc=3;
+//     string entryBy=4;
+//     string lastUpdatedBy=6;
+//     int32 parentId=8;
+// }
+// message ProductResponse{
+//     int32 id=1;
+//     string productName=2;
+//     string productCode=3;
+//     string productDesc=4;
+//     string entryBy=5;
+//     string entryDate=6;
+//     string lastUpdatedBy=7;
+//     string lastUpdatedDate=8;
+//     string parentId=9;
+// }
+
+
+//Getting Role By Id
+message GetRoleByIdRequest{
+    int32 id=1;
+}
+message GetRoleByIdResponse{
+int32 id=1;
+string role_name=2;
+string role_desc=3;
+bool role_status=4;
+bool is_global=5;
+}
+
+// message GetProduct{
+//     repeated ProductResponse GetProduct=1;
+// }
+
+message UpdateRoleRequest{
+    int32 id=1;
+    string role_name=2;
+    string role_desc=3;
+    bool role_status=4;
+    bool is_global=5;
+    }
+
+    message UpdateRoleResponse{
+        int32 id=1;
+        string role_name=2;
+        string role_desc=3;
+        bool role_status=4;
+        bool is_global=5;
+        }  
+ message UserRequest{
+    string user_name=1;
+    string first_name=2;
+    string last_name=3;
+    string email=4;
+ } 
+ 
+ message UserResponse{
+    int32 id=1;
+    string user_name=2;
+    string first_name=3;
+    string last_name=4;
+    string email=5;
+ }
+ message GetUserByIdRequest{
+    int32 id=1;
+}
+message GetUserByIdResponse{
+    int32 id=1;
+    string userName=2;
+    string firstName=3;
+    string lastName=4;
+    string email=5;
+    }
+ message GetUser{
+    repeated UserResponse GetUser=1;
+ }
+
+ message UpdateUserRequest{
+    int32 id=1;
+    string userName=2;
+    string first_name=3;
+    string last_name=4;
+    string email=5;
+    }
+    message UpdateUserResponse{
+        int32 id=1;
+        string user_name=2;
+        string first_name=3;
+        string last_name=4;
+        string email=5;
+     }
+     message assignedPermissionReq{
+        int32 role_details_id=1;
+        int32 permission_id=2;
+     }
+     message assignedPermissionRes{
+        int32 id=1;
+        int32 role_details_id=2;
+        int32 permission_id=3;
+     }
+    
