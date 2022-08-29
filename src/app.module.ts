@@ -6,8 +6,8 @@ import entities from './typeOrm';
 import { UsersModule } from './users/users.module';
 import { ActionModule } from './global/action/action.module';
 import { PermissionModule } from './global/permission/permission.module';
-import { ProductController } from './global/product/product.controller';
-import { ProductModule } from './global/product/product.module';
+import { ProductController } from './product/product.controller';
+import { ProductModule } from './product/product.module';
 import { tenantDatabaseConfig } from './orm.config';
 
 

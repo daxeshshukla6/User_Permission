@@ -15,8 +15,8 @@ export class UserRole {
   @ManyToOne(()=> UserGroup, userGroup=>userGroup.userRoles)
   @JoinColumn({name:'group_id'})
   userGroup : User
-   @ManyToOne(()=> TenantRoles, tenantRole=>tenantRole.userRoles)
-   @JoinColumn({name:'tenant_role_id'})
-  tenantRoles : TenantRoles
+  //  @ManyToOne(()=> TenantRoles, tenantRole=>tenantRole.userRoles)
+  //  @JoinColumn({name:'tenant_role_id'})
+  // tenantRoles : TenantRoles
  
 }

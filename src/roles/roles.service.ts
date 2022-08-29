@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { json } from 'express';
-import { parse } from 'path';
 import { createActionDto } from 'src/global/action/action.dto';
-import { assignedPermissionDto } from 'src/global/permission/permission.dto';
+import { assignedPermissionDto, Permission } from 'src/global/permission/permission.dto';
 import { UserActionMaster } from 'src/typeOrm/action.entity';
 import { PermissionMaster } from 'src/typeOrm/permission.entity';
 import { ProductMaster } from 'src/typeOrm/product.entity';
@@ -24,7 +22,7 @@ export class RolesService {
     constructor(
     // @InjectRepository(RoleDetailedMaster,'global_role_management') private readonly roleDeatailRepository: Repository<RoleDetailedMaster>,
     //  @InjectRepository(UserRole) private readonly mapRepository: Repository<UserRole>,
-    @InjectRepository(PermissionMaster,'tenant_role_management') private readonly permissionRepo: Repository<PermissionMaster>,
+    @InjectRepository(TenantPermission,'tenant_role_management') private readonly permissionRepo: Repository<TenantPermission>,
     @InjectRepository(UserActionMaster,'tenant_role_management') private readonly actionRepository: Repository<UserActionMaster>,
     @InjectRepository(TenantRolesDetailed,'tenant_role_management') private readonly tenantRoleDetailedRepository:Repository<TenantRolesDetailed>,
     @InjectRepository(TenantRoles,'tenant_role_management') private readonly tenantRoleRepository:Repository<TenantRoles>,
@@ -62,21 +60,57 @@ return await this.tenantRoleDetailedRepository.findOneBy(id)
 //     return await this..find()
 // }
 
-async assignPermission(assignPermissionDto:assignedPermissionDto){
+//Function to assign Permission to role 
+async assignPermission(request:Permission){
 
-    const assignPermissions =await this.tenantRoleDetailedRepository.create(assignPermissionDto);
-    console.log(assignPermissions)
-    const res= this.tenantRoleDetailedRepository.save(assignPermissions);
-    
-    return res
+ request.permissions.forEach(async(x)=>{
+    x.actions.forEach(async(y)=>{
+        const permission = new assignedPermissionDto()
+        permission.roleName=request.roleName
+        permission.isTrue=y.value
+        permission.permissionId= await this.getPermission(y.action,x.module,x.subModule)
+        const z = await this.tenantRoleRepository.save(permission)
+        console.log(z)
+    })
+
+ })
+ 
+return 'permission assigned successfully'
+
 }
+
+    
+
 
 //Find the Particular Permission From the Permission Table 
-async getPermission(action:number,routes:string,subroute:string){
+async getPermission(action:string,routes:string,subroutes:string){
     const permission= await this.permissionRepo.find({
-   
+        select:{
+            id:true
+        },
+   where:[{
+    action:action,
+    route:routes,
+    subRoute:subroutes
+   }]
+
  })
+ 
+ return permission[0].id
+}
+async createPermission(createPermissionDto){
+    const newPermission = await this.tenantPermissionRepo.create(createPermissionDto);
+    //await this.getPermission('create','master','domain master')
+     return this.tenantPermissionRepo.save(newPermission);
 }
 
+//Check If any permission assign to a role 
+// async is_permission_assigned(role_id){
+//     const permission=await this.tenantRoleRepository.find({
+//         where:[{
+            
+//         }]
+//     })
+// }
 }
 

@@ -12,8 +12,8 @@ export class TenantPermission{
     // permissionId:number
 
    
-    @Column({name:'product_master_id'})
-    productMasterId:number
+    @Column({name:'product_name'})
+    product:string
 
     @Column({})
     route:string
@@ -21,8 +21,8 @@ export class TenantPermission{
     @Column({name:'sub_route'})
     subRoute:string
 
-    @Column({name:'action_id'})
-    actionId:number
+    @Column({name:'action_name'})
+    action:string
     
 //     @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
 //   tenantRoles:TenantRoles[]

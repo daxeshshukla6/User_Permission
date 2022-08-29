@@ -42,8 +42,8 @@ subRoute:string
   @OneToMany(()=>RoleMaster,role=>role.permissions)
   roles:RoleMaster[]
 
-  @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
-  tenantRoles:TenantRoles[]
+  // @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
+  // tenantRoles:TenantRoles[]
   
   
 }

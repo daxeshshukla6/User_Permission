@@ -9,3 +9,8 @@ export class createRoleDto{
     roleStatus:boolean
     isGlobal:boolean
 }
+export class createTenantRole{
+    id:number
+    isTrue:boolean
+}
+
