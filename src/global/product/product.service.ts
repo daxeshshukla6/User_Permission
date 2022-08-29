@@ -8,7 +8,7 @@ import { createProductDto } from './product.dto';
 @Injectable()
 export class ProductService {
     constructor(
-        @InjectRepository(ProductMaster,'global_role_management') private readonly productRepository: Repository<ProductMaster>
+        @InjectRepository(ProductMaster,'tenant_role_management') private readonly productRepository: Repository<ProductMaster>
         
     ){}
     async createProduct(createProductDto:createProductDto){

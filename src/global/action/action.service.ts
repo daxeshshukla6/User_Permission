@@ -7,7 +7,7 @@ import { createActionDto } from './action.dto';
 @Injectable()
 export class ActionService {
    constructor(
-    @InjectRepository(UserActionMaster,'global_role_management') private readonly actionRepository: Repository<UserActionMaster>
+    @InjectRepository(UserActionMaster,'tenant_role_management') private readonly actionRepository: Repository<UserActionMaster>
    ){}
 
     async createAction(createActionDto:createActionDto){

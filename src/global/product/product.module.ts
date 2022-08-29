@@ -5,7 +5,7 @@ import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([ProductMaster],'global_role_management')],
+  imports:[TypeOrmModule.forFeature([ProductMaster],'tenant_role_management')],
   controllers:[ProductController],
   providers: [ProductService]
 })

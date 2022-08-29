@@ -16,16 +16,16 @@ import { UserRole } from './typeOrm/user_role.entity'
 
 
 require('dotenv').config()
-export const globalDatabaseConfig: TypeOrmModuleOptions = {
-    type: 'postgres',
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    port: parseInt(process.env.DB_PORT),
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME1,
-    synchronize: true,
-    entities:[UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster],
-}
+// export const globalDatabaseConfig: TypeOrmModuleOptions = {
+//     type: 'postgres',
+//     username: process.env.DB_USERNAME,
+//     password: process.env.DB_PASSWORD,
+//     port: parseInt(process.env.DB_PORT),
+//     host: process.env.DB_HOST,
+//     database: process.env.DB_NAME1,
+//     synchronize: true,
+//     entities:[UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster],
+// }
 
 export const tenantDatabaseConfig: TypeOrmModuleOptions = {
     type: 'postgres',
@@ -35,6 +35,6 @@ export const tenantDatabaseConfig: TypeOrmModuleOptions = {
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     synchronize: true,
-    entities:[GroupMember,TenantRoles,TenantRolesDetailed,TenantMasterRole,User,UserRole,UserGroup,TenantPermission],
+    entities:[GroupMember,TenantRoles,TenantRolesDetailed,TenantMasterRole,User,UserRole,UserGroup,TenantPermission,UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster],
 }
 

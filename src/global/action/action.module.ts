@@ -5,7 +5,7 @@ import { ActionController } from './action.controller';
 import { ActionService } from './action.service';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([UserActionMaster],'global_role_management')],
+  imports:[TypeOrmModule.forFeature([UserActionMaster],'tenant_role_management')],
   controllers:[ActionController],
   providers: [ActionService]
 })

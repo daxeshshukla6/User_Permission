@@ -14,6 +14,10 @@ id:number
 @Column({type:'varchar'})
 route:string
 
+@Column({name:'sub_route'})
+subRoute:string
+
+
 // @Column()
 // productsId:string
 
@@ -37,6 +41,9 @@ route:string
   
   @OneToMany(()=>RoleMaster,role=>role.permissions)
   roles:RoleMaster[]
+
+  @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
+  tenantRoles:TenantRoles[]
   
   
 }

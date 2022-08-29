@@ -24,7 +24,7 @@ export class TenantPermission{
     @Column({name:'action_id'})
     actionId:number
     
-    @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
-  tenantRoles:TenantRoles[]
+//     @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
+//   tenantRoles:TenantRoles[]
 
 }

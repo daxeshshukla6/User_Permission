@@ -23,9 +23,9 @@ export class TenantRoles{
     @JoinColumn({name:'tenant_role_detail_id'})
     tenantRoleDetails:TenantRolesDetailed
     
-    @ManyToOne(()=>TenantPermission,permission=>permission.tenantRoles)
+    @ManyToOne(()=>PermissionMaster,permission=>permission.tenantRoles)
     @JoinColumn({name:'permission_id'})
-    permissions:TenantPermission
+    permissions:PermissionMaster
 
     @OneToMany(()=>UserRole,userRole=>userRole.tenantRoles)
     userRoles:UserRole[]
