@@ -15,8 +15,10 @@ export class TenantRolesDetailed{
     
     @Column({type:'boolean',name:'role_status'})
     roleStatus:boolean
+
     @Column({type:'boolean',name:'is_global'})
     isGlobal:boolean
-//     @OneToMany(()=>TenantRoles,TenantRole=>TenantRole.tenantRoleDetails)
-// tenantRoles:TenantRoles[]
+
+    @OneToMany(()=>TenantRoles,TenantRole=>TenantRole.tenantRoleDetails)
+    tenantRoles:TenantRoles[]
 }

@@ -10,7 +10,7 @@ import {
     } from '@nestjs/common';
     
     import { UsersService } from 'src/users/Users.service';
-import { createUserDto } from 'src/users/userDto/users.dto';
+import { createUserDto } from 'src/dtos/users.dto';
 import { GrpcMethod } from '@nestjs/microservices';
     
     @Controller('users')

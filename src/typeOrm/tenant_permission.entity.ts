@@ -1,4 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { UserActionMaster } from "./action.entity";
+import { ProductMaster } from "./product.entity";
 import { RoleMaster } from "./role_master.entity";
 import { TenantRoles } from "./tenant_roles.entity";
 
@@ -8,12 +10,9 @@ export class TenantPermission{
     @PrimaryGeneratedColumn()
     id:number
 
-    // @Column({name:'permission_id'})
-    // permissionId:number
-
    
-    @Column({name:'product_name'})
-    product:string
+   
+  
 
     @Column({})
     route:string
@@ -21,10 +20,17 @@ export class TenantPermission{
     @Column({name:'sub_route'})
     subRoute:string
 
-    @Column({name:'action_name'})
-    action:string
+    @Column({type:"integer"})
+ actionsId:number
+
+    @ManyToOne(()=>UserActionMaster,action=>action.permissions)
+    actions :UserActionMaster
+
+  @ManyToOne(()=>ProductMaster,product=>product.permission)
+  @JoinColumn({name:'product_id'})
+  products :ProductMaster
     
-//     @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
-//   tenantRoles:TenantRoles[]
+    @OneToMany(()=>TenantRoles,TenantRoles=>TenantRoles.permissions)
+  tenantRoles:TenantRoles[]
 
 }

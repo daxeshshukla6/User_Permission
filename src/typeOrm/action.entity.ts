@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { PermissionMaster } from "./permission.entity";
+import { TenantPermission } from "./tenant_permission.entity";
 
 
 @Entity()
@@ -23,8 +24,8 @@ export class UserActionMaster{
   @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" ,name:'last_updated_date'})
     public lastUpdatedDate: Date;
   
-  @OneToMany(()=>PermissionMaster,permission=>permission.actions)
-    permissions:PermissionMaster[]
+  @OneToMany(()=>TenantPermission,permission=>permission.actions)
+    permissions:TenantPermission[]
   
   
  

@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { PermissionMaster } from "./permission.entity";
+import { TenantPermission } from "./tenant_permission.entity";
 
 @Entity()
 export class ProductMaster{
@@ -30,8 +31,8 @@ lastUpdatedBy:string
 // @Column({nullable:true})
 // parentId:string
 
-@OneToMany(()=>PermissionMaster,permission=>permission.products)
- permission:PermissionMaster[]
+@OneToMany(()=>TenantPermission,permission=>permission.products)
+ permission:TenantPermission[]
 
  @ManyToOne((type) => ProductMaster, (product) => product.children)
  @JoinColumn({name:'parent_id'})

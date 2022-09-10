@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PermissionService } from 'src/global/permission/permission.service';
 import { UserActionMaster } from 'src/typeOrm/action.entity';
 import { FieldMaster } from 'src/typeOrm/field_master.entity';
 import { PermissionMaster } from 'src/typeOrm/permission.entity';
@@ -19,6 +20,6 @@ import { RolesService } from './roles.service';
     //TypeOrmModule.forFeature([],'tenant_role_management')
 ],
   controllers: [RolesController],
-  providers: [RolesService]
+  providers: [RolesService,PermissionService]
 })
 export class RolesModule {}

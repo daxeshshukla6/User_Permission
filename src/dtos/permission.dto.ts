@@ -3,13 +3,15 @@ import { IsNotEmpty } from "class-validator"
 export class assignedPermissionDto{
     // tenantId:number
     id:number
-    roleName:string
-    permissionId:number
+    tenantId:number
+    tenantRoleDetailsId:number
+    permissionsId:number
     isTrue:boolean
 }
 export class Permission{
-    roleName:string
-    permissions:createPermission[]
+    tenantRoleDetailsId:number
+    tenantId:number
+    permissions:Array<createPermission>
 }
 export class createPermission{
    module:string

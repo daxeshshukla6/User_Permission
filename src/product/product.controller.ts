@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { createProductDto } from './product.dto';
+import { createProductDto } from '../dtos/product.dto';
 import { ProductService } from './product.service';
 
 @Controller('product')

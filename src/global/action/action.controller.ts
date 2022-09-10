@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { RolesService } from 'src/roles/roles.service';
-import { createActionDto } from './action.dto';
+import { createActionDto } from '../../dtos/action.dto';
 import { ActionService } from './action.service';
 
 @Controller('action')

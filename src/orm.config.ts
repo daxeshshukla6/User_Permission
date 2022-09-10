@@ -35,6 +35,7 @@ export const tenantDatabaseConfig: TypeOrmModuleOptions = {
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     synchronize: true,
+   //logging:true,
     entities:[GroupMember,TenantRoles,TenantRolesDetailed,TenantMasterRole,User,UserRole,UserGroup,TenantPermission,UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster],
 }
 

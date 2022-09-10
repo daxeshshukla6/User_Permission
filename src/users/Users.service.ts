@@ -2,7 +2,7 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm';
 import { ProductMaster } from 'src/typeOrm/product.entity';
-import { createUserDto } from 'src/users/userDto/users.dto';
+import { createUserDto } from 'src/dtos/users.dto';
 import { Repository } from 'typeorm';
 
 
