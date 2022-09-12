@@ -4,13 +4,14 @@ import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import { createActionDto } from 'src/dtos/action.dto';
 import { assignedPermissionDto, createPermissionDto, Permission } from 'src/dtos/permission.dto';
 import { PermissionService } from 'src/global/permission/permission.service';
+import { TenantPermissionService } from 'src/tenantpermission/tenantpermission.service';
 // import { assignedPermissionDto, createPermissionDto } from 'src/global/permission/permission.dto';
 import { createRoleDto } from '../dtos/role.dto';
 import { RolesService } from './roles.service';
 
 @Controller('roles')
 export class RolesController {
-    constructor(private readonly roleService:RolesService,private readonly permissionService:PermissionService)
+    constructor(private readonly roleService:RolesService,private readonly permissionService:PermissionService,private readonly tenantpermissionService:TenantPermissionService )
     {}
 //Create Role Details 
     @GrpcMethod('RoleManagement','CreateRole')
@@ -50,7 +51,7 @@ async CreatePermission(@Body() createPermissionDto:createPermissionDto){
 async AssignPermission(@Body() Permission:Permission){
     //throw new RpcException({message:'error message'})
    try{
-    const res = await this.permissionService.assignPermission(Permission)
+    const res = await this.tenantpermissionService.assignPermission(Permission)
 return {message:res}
    }catch(e){
     throw new RpcException({message:e.message,status:e.status})

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { assignedPermissionDto, Permission } from 'src/dtos/permission.dto';
-import { UserActionMaster } from 'src/typeOrm/action.entity';
+import { UserActionMaster } from '../typeOrm/action.entity';
 import { TenantPermission } from 'src/typeOrm/tenant_permission.entity';
 import { TenantRoles } from 'src/typeOrm/tenant_roles.entity';
 import { TenantRolesDetailed } from 'src/typeOrm/tenant_roles_detailed.entity';
@@ -24,6 +24,7 @@ export class RolesService {
      const newRole = this.tenantRoleDetailedRepository.create(createRoleDto);
      
      return this.tenantRoleDetailedRepository.save(newRole);
+     
 
  }
 
@@ -78,8 +79,6 @@ async createPermission(createPermissionDto){
      return this.tenantPermissionRepo.save(newPermission);
 }
 async timepass ():Promise<any>{
-    const role_details =await this.getRoleDetails(1)
-    console.log(role_details)
     }
 }
 

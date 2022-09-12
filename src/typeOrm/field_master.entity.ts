@@ -24,6 +24,6 @@ export class FieldMaster{
     @Column({type:"date",name:'last_updated_date'})
     lastUpdatedDate:Date
 
-   @OneToMany(()=>PermissionMaster,permission=>permission.fields)
-  permissions:PermissionMaster[]
+  //  @OneToMany(()=>PermissionMaster,permission=>permission.fields)
+  // permissions:PermissionMaster[]
 }

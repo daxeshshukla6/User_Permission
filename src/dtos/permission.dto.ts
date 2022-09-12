@@ -31,3 +31,6 @@ export class createPermissionDto{
     productName:string
     actionName:string
 }
+export class Role{
+    id:number
+}

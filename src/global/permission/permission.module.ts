@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserActionMaster } from 'src/typeOrm/action.entity';
+import { UserActionMaster } from '../../typeOrm/action.entity';
 import { FieldMaster } from 'src/typeOrm/field_master.entity';
 import { PermissionMaster } from 'src/typeOrm/permission.entity';
 import { ProductMaster } from 'src/typeOrm/product.entity';

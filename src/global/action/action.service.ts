@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserActionMaster } from 'src/typeOrm/action.entity';
+import { UserActionMaster } from '../../typeOrm/action.entity';
 import { Repository } from 'typeorm';
 import { createActionDto } from '../../dtos/action.dto';
 

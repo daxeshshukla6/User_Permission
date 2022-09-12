@@ -35,9 +35,9 @@ subRoute:string
  @JoinColumn({name:'action_id'})
   actions :UserActionMaster
 
-  @ManyToOne(()=>FieldMaster,field=>field.permissions)
-  @JoinColumn({name:'field_id'})
-  fields:FieldMaster
+  // @ManyToOne(()=>FieldMaster,field=>field.permissions)
+  // @JoinColumn({name:'field_id'})
+  // fields:FieldMaster
   
   @OneToMany(()=>RoleMaster,role=>role.permissions)
   roles:RoleMaster[]
