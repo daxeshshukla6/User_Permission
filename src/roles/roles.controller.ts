@@ -60,7 +60,7 @@ return {message:res}
 
 @GrpcMethod('RoleManagement', 'Timepass')
 async timepass ():Promise<any> {
-    await this.permissionService.timepass()
+    await this.roleService.timepass()
 }
 
  }

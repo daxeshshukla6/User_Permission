@@ -17,7 +17,11 @@ export class PermissionService {
         @InjectRepository(TenantPermission,'tenant_role_management') private readonly tenantPermissionRepo:Repository<TenantPermission>,
         @InjectDataSource('tenant_role_management') private tenantDataSource: DataSource,
     ) { } 
-
+    async createPermission(createPermissionDto){
+      const newPermission = await this.permissionRepo.create(createPermissionDto);
+       return this.tenantPermissionRepo.save(newPermission);
+  }
+    
     async getPermission(productid:number){
         const modules=await this.permissionRepo.find({
             select:{
@@ -35,8 +39,6 @@ export class PermissionService {
                 }
             }
         })
-        
-        //console.log(modules)
         const output1 = [];
   modules.forEach((x)=>{
     const y = {
@@ -51,10 +53,7 @@ export class PermissionService {
     }
     output1.push(y)
   })
-
-  
-
-  var output2 = [];
+var output2 = [];
 
   output1.forEach(function(item) {
     var existing = output2.filter(function(v, i) {
@@ -67,40 +66,7 @@ export class PermissionService {
       output2.push(item)
     }
   });
-  
-
-      console.log(output2)  
+    console.log(output2)  
       return {permissions:output2}
     }
-    async getAction(routes:string,subroutes:string){
-        
-        const modules=await this.permissionRepo.find({
-           select:{
-            actions:{
-                actionName:true
-            }
-            },
-            relations:{
-                actions:true,},
-            where:{
-                route:routes,
-                subRoute:subroutes
-
-            }
-            
-        })
-        let a =[]
-for  ( const i in modules){
-         a[i]=modules[i].actions.actionName
-        }
-
-       // console.log(a)
-        return a
-        }
-   async timepass ():Promise<any>{
-   const a=await this.getAction('master','product')
-   const b=await this.getPermission(1)
-    
-        }
-
 }

@@ -8,6 +8,10 @@ import { TenantRoles } from 'src/typeOrm/tenant_roles.entity';
 import { TenantRolesDetailed } from 'src/typeOrm/tenant_roles_detailed.entity';
 import { DataSource, Repository,QueryRunner } from 'typeorm';
 import { createRoleDto } from '../dtos/role.dto';
+import * as path  from 'path';
+
+
+import * as excelReader from 'xlsx'
 
 @Injectable()
 export class RolesService { 
@@ -21,17 +25,22 @@ export class RolesService {
 ) { } 
 //This function is for create role detail 
  createRoleDetail(createRoleDto: createRoleDto) {
+    try{
      const newRole = this.tenantRoleDetailedRepository.create(createRoleDto);
      
      return this.tenantRoleDetailedRepository.save(newRole);
      
 
- }
+    }catch(e){
+        throw new RpcException({message:e.message,status:e.status})
+        
+    }
+}
 
  //This function gets the all roles with details 
 async getroles(){
     const res = await this.tenantRoleDetailedRepository.find()
-   // await this.getAction('view')
+   if(!res) throw new RpcException('Roles Not Found')
    return {
     GetRole:res
    }
@@ -49,15 +58,14 @@ async updateRole(createRoleDto:createRoleDto){
 //this function gets the role details by its id 
 async getrole(id){
    
-return await this.tenantRoleDetailedRepository.findOneBy(id)
+const res= await this.tenantRoleDetailedRepository.findOneBy(id)
+if(!res) throw new RpcException('Role not Found')
+return res
 }
 
 
     
-//Find Role_id by the role name 
-async getRoleId(role_name:string,role_desc:string,){
 
-}
 async getRoleDetails(roleid:number){
     const role_details = await this.tenantDataSource.getRepository(TenantRoles).createQueryBuilder('tenantRole')
     
@@ -67,19 +75,33 @@ async getRoleDetails(roleid:number){
     .getMany()
     return role_details[0].tenantRoleDetails
 }
- //get role with permission
-// async getRolePermisison(id){
-// const twoJoin=await this.tenantDataSource.getRepository(Action).createQueryBuilder("action").leftJoin(Permission,"permission","permission.actionId=action.id").
-
-// }
 
 async createPermission(createPermissionDto){
     const newPermission = await this.tenantPermissionRepo.create(createPermissionDto);
     //await this.getPermission('create','master','domain master')
      return this.tenantPermissionRepo.save(newPermission);
 }
-async timepass ():Promise<any>{
+
+//bulk upload
+async excelFileReader2(){
+    const filePath = path.resolve(__dirname, '../../template/Role.xlsx')
+    console.log(filePath)
+    const file = excelReader.readFile(filePath)
+    // const sheets = file.SheetNames
+    let roles = [];
+    let user = [];
+    roles = excelReader.utils.sheet_to_json(file.Sheets[file.SheetNames[0]])
+    user = excelReader.utils.sheet_to_json(file.Sheets[file.SheetNames[1]])
+    const data = {
+        roles:roles,
+        users:user
     }
+    return data;
+}
+async timepass ():Promise<any>{
+   const a = await this.excelFileReader2()
+   console.log(a)
+         }
 }
 
 
