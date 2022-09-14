@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { assignedPermissionDto, Permission } from 'src/dtos/permission.dto';
@@ -56,25 +56,92 @@ async updateRole(createRoleDto:createRoleDto){
 }
 
 //this function gets the role details by its id 
-async getrole(id){
+async getrole(body:{id:number}){
    
-const res= await this.tenantRoleDetailedRepository.findOneBy(id)
-if(!res) throw new RpcException('Role not Found')
-return res
+const res= await this.getRoleDetails(body.id)
+// console.log(res)
+
+const resp= await this.getPermission(body.id)
+// console.log(resp)
+const result={
+    ...res,
+    ...resp
 }
 
+if(!resp) throw new RpcException('Role not Found')
+return result
+}
+//Permission
+async getPermission(roleid:number){
+    const permissions=await this.permissionRepo.find({
+        select:{
+           
+            
+            route:true,
+            subRoute:true,
+            actions:{
+                actionName:true
+            }
+            
+        },
+         relations:{
+             actions:true
+             },
+        where:{
+            tenantRoles:{
+                tenantRoleDetails:{
+                    id:roleid
+                }
+            }
+            
+        }
+    })
+  
+    const output1 = [];
+permissions.forEach((x)=>{
+const y = {
+    
+ module:x.route,
+ subModule:x.subRoute,
+ actions:[
+    {
+    action:x.actions.actionName,
+    value:true
+}]
+
+}
+//console.log(y)
+ output1.push(y)
+})
+var output2 = [];
+
+output1.forEach(function(item) {
+ var existing = output2.filter(function(v, i) {
+   return v.module == item.module && v.subModule == item.subModule;
+  });
+ if (existing.length) {
+   var existingIndex = output2.indexOf(existing[0]);
+   output2[existingIndex].actions = output2[existingIndex].actions.concat(item.actions);
+ } else{
+   output2.push(item)
+ }
+});
+//console.log(JSON.stringify(output2[0]))  
+ return {permissions:output2}
+}
 
     
 
 async getRoleDetails(roleid:number){
-    const role_details = await this.tenantDataSource.getRepository(TenantRoles).createQueryBuilder('tenantRole')
-    
-    .leftJoin('tenantRole.tenantRoleDetails','tenantRolesDetailed')
-    .addSelect(['tenantRolesDetailed.roleName','tenantRolesDetailed.roleDesc'])
-    .where({id:roleid})
-    .getMany()
-    return role_details[0].tenantRoleDetails
-}
+    const role_details = await this.tenantRoleDetailedRepository.find({
+        where:{
+            
+                id:roleid
+            
+        }
+    })
+    return role_details[0]
+    }
 
 async createPermission(createPermissionDto){
     const newPermission = await this.tenantPermissionRepo.create(createPermissionDto);

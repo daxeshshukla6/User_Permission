@@ -29,8 +29,9 @@ async GetRole(){
 //Retrive Particular role by id 
 @GrpcMethod('RoleManagement','GetRoleById')
 async GetRoleById(id){
-return await this.roleService.getrole(id);
-
+const a= await this.roleService.getrole(id);
+//console.log(a)
+return a    
 }
 //Update Role Details 
 @GrpcMethod('RoleManagement','UpdateRole')
