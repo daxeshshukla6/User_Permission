@@ -2,14 +2,16 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm';
 import { ProductMaster } from 'src/typeOrm/product.entity';
-import { createUserDto } from 'src/dtos/users.dto';
+import { assignroletouser, createUserDto, roleToUser } from 'src/dtos/users.dto';
 import { Repository } from 'typeorm';
+import { UserRole } from 'src/typeOrm/user_role.entity';
 
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectRepository(User,'tenant_role_management') private readonly userRepository: Repository<User>,
+        @InjectRepository(UserRole,'tenant_role_management') private readonly userRoleRepository:Repository<UserRole>
         
     ) { }                                                                        
 //This function is for creating user details 
@@ -30,6 +32,7 @@ export class UsersService {
 //This function is for getting user by id
     async getuserbyid(id){
         return  await this.userRepository.findOneBy(id)
+        
     }
 
 //This function is for updatting user details 
@@ -38,7 +41,23 @@ export class UsersService {
          const res=await this.userRepository.findOneBy(createUserDto)
             
          return res
-}    
+}   
+async assignRole(request:roleToUser){
+
+    // console.log(request.role)
+    request.role.forEach(async(x)=>{
+        
+        const assignrole=new UserRole()
+        assignrole.user_id=request.user_id
+        assignrole.tenant_role_id=x
+        const z= await this.userRoleRepository.save(assignrole)
+        
+        
+        
+    })
+    
+    return 'role assigned successfully'
+} 
     
    
 }

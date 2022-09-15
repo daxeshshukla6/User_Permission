@@ -17,10 +17,10 @@ service RoleManagement{
     rpc GetUser(google.protobuf.Empty) returns (GetUser);
     rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse);
     rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
-    rpc AssignPermission(RolePermission) returns (assignedPermissionRes);
+    rpc AssignPermission(RolePermission) returns (assignedRes);
     rpc Timepass(google.protobuf.Empty) returns (google.protobuf.Empty);
     rpc GetGlobalPermission(GlobalRolePermisisonReq) returns (GlobalRolePermission);
-
+    rpc AssignedRoleToUser(AssignRoleReq) returns (assignedRes);
 }
 
 message permissionRequest{
@@ -199,7 +199,7 @@ message GetUserByIdResponse{
         int32 role_details_id=1;
         int32 permission_id=2;
      }
-     message assignedPermissionRes{
+     message assignedRes{
         string message=1;
      }
 
@@ -236,6 +236,10 @@ message GetUserByIdResponse{
         }
         repeated Permissions permissions=1;
     }
-
+    message AssignRoleReq {
+        int32 user_id = 1;
+        repeated int32 role = 2;
+    }
+    
      
     

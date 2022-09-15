@@ -75,9 +75,7 @@ return result
 async getPermission(roleid:number){
     const permissions=await this.permissionRepo.find({
         select:{
-           
-            
-            route:true,
+             route:true,
             subRoute:true,
             actions:{
                 actionName:true

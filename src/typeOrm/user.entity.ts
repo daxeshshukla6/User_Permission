@@ -9,16 +9,16 @@ export class User {
   @PrimaryGeneratedColumn()
   id:number;
 
-  @Column({type:'varchar',name:'user_name'})
+  @Column({type:'varchar',name:'user_name',nullable:true})
   userName:string
 
-  @Column({type:'varchar',name:'first_name'})
+  @Column({type:'varchar',name:'first_name',nullable:true})
   firstName:string
 
-  @Column({type:'varchar',name:'last_name'})
+  @Column({type:'varchar',name:'last_name',nullable:true})
   lastName:string
 
-  @Column({type:'varchar'})
+  @Column({type:'varchar',nullable:true})
   email: string;
 
   

@@ -28,6 +28,5 @@ export class TenantRoles{
     @ManyToOne(()=>TenantPermission,permission=>permission.tenantRoles)
     permissions:TenantPermission
 
-    // @OneToMany(()=>UserRole,userRole=>userRole.tenantRoles)
-    // userRoles:UserRole[]
+   
 }

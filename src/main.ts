@@ -11,7 +11,7 @@ async function bootstrap() {
         package:'roleManagement',
         protoPath: join(__dirname,'../grpc/roles.proto'),
         url:'localhost:50051',
-        // loader:{keepCase:true}
+        loader:{keepCase:true}
       },
     });
 

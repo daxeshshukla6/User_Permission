@@ -10,7 +10,7 @@ import {
     } from '@nestjs/common';
     
     import { UsersService } from 'src/users/Users.service';
-import { createUserDto } from 'src/dtos/users.dto';
+import { assignroletouser, createUserDto, roleToUser } from 'src/dtos/users.dto';
 import { GrpcMethod } from '@nestjs/microservices';
     
     @Controller('users')
@@ -20,9 +20,12 @@ import { GrpcMethod } from '@nestjs/microservices';
      @GrpcMethod('RoleManagement','GetUser') 
     async GetUser() {
       return await this.userService.getUsers();
-       
-      
-       
+      }
+
+      @GrpcMethod('RoleManagement','AssignedRoleToUser')
+      async  AssignedRoleToUser(@Body() Roles:roleToUser){
+        const res = await this.userService.assignRole(Roles)
+        return {message:res}
       }
      @GrpcMethod('RoleManagement','CreateUser')
       createUser(@Body() createUserDto: createUserDto) {

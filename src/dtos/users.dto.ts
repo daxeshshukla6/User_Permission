@@ -7,3 +7,14 @@ export class createUserDto {
   lastName:string;
   email: string;
 }
+export class assignroletouser{
+  user_id:number
+  role_id:number
+}
+export class roleToUser{
+user_id:number
+role:number[]
+}
+export class role{
+id:number
+}
