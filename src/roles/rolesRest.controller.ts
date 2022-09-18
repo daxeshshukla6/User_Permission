@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 // import console, { Console } from 'console';
 import { createActionDto } from 'src/dtos/action.dto';
@@ -10,40 +10,40 @@ import { createRoleDto } from '../dtos/role.dto';
 import { RolesService } from './roles.service';
 
 @Controller('roles')
-export class RolesController {
+export class RolesRestController {
     constructor(private readonly roleService:RolesService,private readonly permissionService:PermissionService,private readonly tenantpermissionService:TenantPermissionService )
     {}
 //Create Role Details 
-    @GrpcMethod('RoleManagement','CreateRole')
+    @Post('create')
     async CreateRole(@Body() createRoleDto:createRoleDto){
         const res= await this.roleService.createRoleDetail(createRoleDto)
         return res
     }
 //Retrive All roles details  
-@GrpcMethod('RoleManagement','GetRole')
+@Get('getAll')
 async GetRole(){
    return await this.roleService.getroles();
 
 //    return re
 }
 //Retrive Particular role by id 
-@GrpcMethod('RoleManagement','GetRoleById')
-async GetRoleById(body:{roleid:number}){
-const a= await this.roleService.getrole(body.roleid);
+@Get('get')
+async GetRoleById(@Query("id")id:number){
+const a= await this.roleService.getrole(id);
 //console.log(a)
 return a    
 }
 //Update Role Details 
-@GrpcMethod('RoleManagement','UpdateRole')
+@Put('updateRole')
 async UpdateRole(@Body() CreateRoleDto:createRoleDto){
    return   await this.roleService.updateRole(CreateRoleDto);
     
 }
- 
+
+
 
 //Assign Permission to Role 
-@GrpcMethod('RoleManagement','AssignPermission')
-
+@Post('assignPermission')
 async AssignPermission(@Body() Permission:Permission){
     //throw new RpcException({message:'error message'})
    try{

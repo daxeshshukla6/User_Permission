@@ -7,6 +7,7 @@ import { TenantPermission } from "./tenant_permission.entity";
 export class UserActionMaster{
   @PrimaryGeneratedColumn()
   id:number;
+  
   @Column({ type:'varchar', nullable:true ,name:'action_name'})
     actionName:string
   

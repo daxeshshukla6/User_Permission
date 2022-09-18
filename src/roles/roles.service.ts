@@ -27,7 +27,7 @@ export class RolesService {
  createRoleDetail(createRoleDto: createRoleDto) {
     try{
      const newRole = this.tenantRoleDetailedRepository.create(createRoleDto);
-     
+     console.log(newRole)
      return this.tenantRoleDetailedRepository.save(newRole);
      
 
@@ -56,12 +56,12 @@ async updateRole(createRoleDto:createRoleDto){
 }
 
 //this function gets the role details by its id 
-async getrole(body:{id:number}){
+async getrole(roleid:number){
    
-const res= await this.getRoleDetails(body.id)
+const res= await this.getRoleDetails(roleid)
 // console.log(res)
 
-const resp= await this.getPermission(body.id)
+const resp= await this.getPermission(roleid)
 // console.log(resp)
 const result={
     ...res,
@@ -141,11 +141,7 @@ async getRoleDetails(roleid:number){
     return role_details[0]
     }
 
-async createPermission(createPermissionDto){
-    const newPermission = await this.tenantPermissionRepo.create(createPermissionDto);
-    //await this.getPermission('create','master','domain master')
-     return this.tenantPermissionRepo.save(newPermission);
-}
+
 
 //bulk upload
 async excelFileReader2(){

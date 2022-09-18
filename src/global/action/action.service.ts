@@ -19,8 +19,10 @@ export class ActionService {
         return re
     }
     async getActions(){
-        const res= JSON.stringify(await this.actionRepository.find())
-       const resp = JSON.parse(res)
-        return resp
+        const res= await this.actionRepository.find()
+       
+        return {
+            getActions:res
+        }
     }
 }

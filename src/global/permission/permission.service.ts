@@ -69,4 +69,5 @@ var output2 = [];
     console.log(output2)  
       return {permissions:output2}
     }
+    
 }

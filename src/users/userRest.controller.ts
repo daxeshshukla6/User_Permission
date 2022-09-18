@@ -5,6 +5,8 @@ import {
     Param,
     ParseIntPipe,
     Post,
+    Put,
+    Query,
     UsePipes,
     ValidationPipe,
     } from '@nestjs/common';
@@ -14,30 +16,30 @@ import { assignroletouser, createUserDto, roleToUser } from 'src/dtos/users.dto'
 import { GrpcMethod } from '@nestjs/microservices';
     
     @Controller('users')
-    export class UsersController {
+    export class UsersRestController {
       constructor(private readonly userService: UsersService) {}
       
-     @GrpcMethod('RoleManagement','GetUser') 
+    @Get('get') 
     async GetUser() {
       return await this.userService.getUsers();
       }
 
-      @GrpcMethod('RoleManagement','AssignedRoleToUser')
+      @Post('assignRole')
       async  AssignedRoleToUser(@Body() Roles:roleToUser){
         const res = await this.userService.assignRole(Roles)
         return {message:res}
       }
-     @GrpcMethod('RoleManagement','CreateUser')
+    @Post('create')
       createUser(@Body() createUserDto: createUserDto) {
         return this.userService.createUser(createUserDto);
       }
-      @GrpcMethod('RoleManagement','GetUserById')
- async GetUserById(body:{id:number}){
-        const res= await this.userService.getuserbyid(body.id)
+    @Get('gets')
+ async GetUserById(@Query("id")id:number){
+        const res= await this.userService.getuserbyid(id)
         console.log(res)
         return res
       }
-      @GrpcMethod('RoleManagement','UpdateUser')
+     @Put('update')
       async UpdateUser(@Body() createUserDto:createUserDto){
        return await this.userService.updateUser(createUserDto)
       }

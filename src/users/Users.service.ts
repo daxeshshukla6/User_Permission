@@ -30,8 +30,14 @@ export class UsersService {
     }
 
 //This function is for getting user by id
-    async getuserbyid(id){
-        return  await this.userRepository.findOneBy(id)
+    async getuserbyid(userid:number){
+    const res= await this.userRepository.find({
+            where:{
+                id:userid
+            }
+        })
+        
+        return res[0]
         
     }
 
@@ -51,10 +57,7 @@ async assignRole(request:roleToUser){
         assignrole.user_id=request.user_id
         assignrole.tenant_role_id=x
         const z= await this.userRoleRepository.save(assignrole)
-        
-        
-        
-    })
+        })
     
     return 'role assigned successfully'
 } 

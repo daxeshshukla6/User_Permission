@@ -8,12 +8,13 @@ import { TenantRoles } from 'src/typeOrm/tenant_roles.entity';
 import { TenantRolesDetailed } from 'src/typeOrm/tenant_roles_detailed.entity';
 import { UserGroup } from 'src/typeOrm/usergroup.entity';
 import { UserRole } from 'src/typeOrm/user_role.entity';
+import { UsersRestController } from './userRest.controller';
 import { UsersController } from './users.controller';
 import { UsersService } from './Users.service';
 
 @Module({
   imports:[TypeOrmModule.forFeature([GroupMember,TenantRoles,TenantRolesDetailed,TenantMasterRole,User,UserRole,UserGroup],'tenant_role_management')],
-  controllers: [UsersController],
+  controllers: [UsersController,UsersRestController],
   providers: [UsersService]
 })
 export class UsersModule {}

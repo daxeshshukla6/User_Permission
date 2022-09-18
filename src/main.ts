@@ -3,7 +3,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+async function bootstrapGrpc() {
   const app = await NestFactory.create(AppModule);
   app.connectMicroservice<MicroserviceOptions>({
       transport:Transport.GRPC,
@@ -11,21 +11,17 @@ async function bootstrap() {
         package:'roleManagement',
         protoPath: join(__dirname,'../grpc/roles.proto'),
         url:'localhost:50051',
-        loader:{keepCase:true}
+        //loader:{keepCase:true}
       },
     });
 
   await app.startAllMicroservices();
+  
+  
+}
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
   await app.listen(3000);
-  // const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,{
-  //   transport:Transport.GRPC,
-  //   options: {
-  //     package:'actions',
-  //     protoPath: join(__dirname,'../grpc/roles.proto'),
-  //     url:'localhost:50051'
-
-  //   },
-  // });
-  // await app.listen();
 }
 bootstrap();
+bootstrapGrpc();
