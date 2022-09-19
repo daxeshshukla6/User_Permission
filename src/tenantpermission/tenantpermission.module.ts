@@ -12,11 +12,13 @@ import { TenantRolesDetailed } from 'src/typeOrm/tenant_roles_detailed.entity';
 import { TenantPermissionController } from './tenantpermission.controller';
 import { TenantPermissionService } from './tenantpermission.service';
 
+import { checks } from 'src/roles/checks';
+
 @Module({
   imports:[TypeOrmModule.forFeature([UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster,TenantRoles,TenantRolesDetailed,TenantPermission],'tenant_role_management')],
 
   controllers: [TenantPermissionController],
-  providers: [TenantPermissionService],
+  providers: [TenantPermissionService,checks],
      
 })
 export class TenantPermissionModule {}

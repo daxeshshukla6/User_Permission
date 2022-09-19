@@ -15,11 +15,11 @@ export class UsersService {
         
     ) { }                                                                        
 //This function is for creating user details 
-    createUser(createUserDto: createUserDto) {
+   async createUser(createUserDto: createUserDto) {
       
-        const newUser = this.userRepository.create(createUserDto);
+        const newUser =await this.userRepository.create(createUserDto);
         
-        return this.userRepository.save(newUser);
+        return await this.userRepository.save(newUser);
     }
 //This function is for Getting all user detials 
     async getUsers(){
@@ -48,6 +48,7 @@ export class UsersService {
             
          return res
 }   
+//This function is for assign Role to User 
 async assignRole(request:roleToUser){
 
     // console.log(request.role)

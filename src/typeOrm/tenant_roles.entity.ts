@@ -10,7 +10,7 @@ export class TenantRoles{
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column({type:'integer',name:'tenant_id'})
+    @Column({type:'integer',name:'tenant_id',nullable:true})
     tenantId:number
 
     

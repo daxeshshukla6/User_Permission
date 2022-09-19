@@ -11,15 +11,17 @@ import { ProductModule } from './global/product/product.module';
 import { tenantDatabaseConfig } from './orm.config';
 import { TenantPermissionModule } from './tenantpermission/tenantpermission.module';
 import { PermissionModule } from './global/permission/permission.module';
+import { UserGroupController } from './user-group/user-group.controller';
+import { UserGroupModule } from './user-group/user-group.module';
 
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({...tenantDatabaseConfig, name:'tenant_role_management'}),
     //TypeOrmModule.forRoot({...globalDatabaseConfig, name:'global_role_management'}),
-    UsersModule,RolesModule, ActionModule, TenantPermissionModule, ProductModule,PermissionModule
+    UsersModule,RolesModule, ActionModule, TenantPermissionModule, ProductModule,PermissionModule, UserGroupModule
   ],
-  controllers: [],
+  controllers: [UserGroupController],
   providers: [],
 })
 export class AppModule {}

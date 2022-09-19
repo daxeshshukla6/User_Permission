@@ -21,8 +21,8 @@ export class RolesController {
     }
 //Retrive All roles details  
 @GrpcMethod('RoleManagement','GetRole')
-async GetRole(){
-   return await this.roleService.getroles();
+async GetRole(body:{tenantid:number}){
+   return await this.roleService.getroles(body.tenantid);
 
 //    return re
 }

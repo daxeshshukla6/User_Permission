@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { UserActionMaster } from '../typeOrm/action.entity';
@@ -7,6 +7,7 @@ import { TenantRoles } from 'src/typeOrm/tenant_roles.entity';
 import { TenantRolesDetailed } from 'src/typeOrm/tenant_roles_detailed.entity';
 import { DataSource, Repository } from 'typeorm';
 import { assignedPermissionDto, Permission, Role } from '../dtos/permission.dto';
+import { checks } from 'src/roles/checks';
 
 @Injectable()
 export class TenantPermissionService {
@@ -17,10 +18,13 @@ export class TenantPermissionService {
         @InjectRepository(TenantRoles,'tenant_role_management') private readonly tenantRoleRepository:Repository<TenantRoles>,
         @InjectRepository(TenantPermission,'tenant_role_management') private readonly tenantPermissionRepo:Repository<TenantPermission>,
         @InjectDataSource('tenant_role_management') private tenantDataSource: DataSource,
+        @Inject(forwardRef(() => checks))
+        private check:checks
     ) { } 
 
 
     async assignPermission(request:Permission){
+
     
         request.permissions.forEach(async(x)=>{
           
@@ -31,9 +35,18 @@ export class TenantPermissionService {
                permission.tenantId=request.tenantId
                permission.permissionsId= await this.getPermission(y.action,x.subModule,x.module)
                if(y.value===true){
-                const z = await this.tenantRoleRepository.save(permission)
-               }
+                
                
+                if(await this.check.ispermissionexists(permission.tenantRoleDetailsId,x.module,x.subModule,y.action)===false)
+                await this.tenantRoleRepository.save(permission)
+                
+                
+                
+               
+            }
+            else{
+                await this.tenantRoleRepository.delete(permission)
+            }
                
         
         
@@ -65,6 +78,7 @@ async getPermission(action:string,subroutes:string,routes:string){
  
  }
  }
+ 
  async getAction(actions:string){
     const action_id= await this.actionRepository.find({
         select:{

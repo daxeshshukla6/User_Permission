@@ -10,8 +10,9 @@ import { DataSource, Repository,QueryRunner } from 'typeorm';
 import { createRoleDto } from '../dtos/role.dto';
 import * as path  from 'path';
 
-
+import { checks } from './checks';
 import * as excelReader from 'xlsx'
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class RolesService { 
@@ -22,12 +23,14 @@ export class RolesService {
     @InjectRepository(TenantRoles,'tenant_role_management') private readonly tenantRoleRepository:Repository<TenantRoles>,
     @InjectRepository(TenantPermission,'tenant_role_management') private readonly tenantPermissionRepo:Repository<TenantPermission>,
     @InjectDataSource('tenant_role_management') private tenantDataSource: DataSource,
+    private jwtservice:JwtService,
+    private check:checks
 ) { } 
 //This function is for create role detail 
  createRoleDetail(createRoleDto: createRoleDto) {
     try{
      const newRole = this.tenantRoleDetailedRepository.create(createRoleDto);
-     console.log(newRole)
+     //console.log(newRole)
      return this.tenantRoleDetailedRepository.save(newRole);
      
 
@@ -38,9 +41,17 @@ export class RolesService {
 }
 
  //This function gets the all roles with details 
-async getroles(){
-    const res = await this.tenantRoleDetailedRepository.find()
+async getroles(tenantid:number){
+    //console.log(tenantid)
+    const res = await this.tenantRoleDetailedRepository.find({
+        where:{
+            
+                tenantId:tenantid
+            
+        }
+    })
    if(!res) throw new RpcException('Roles Not Found')
+  
    return {
     GetRole:res
    }
@@ -138,7 +149,10 @@ async getRoleDetails(roleid:number){
             
         }
     })
+    const res= await this.timepass()
+    console.log(res)
     return role_details[0]
+    
     }
 
 
@@ -160,8 +174,15 @@ async excelFileReader2(){
     return data;
 }
 async timepass ():Promise<any>{
-   const a = await this.excelFileReader2()
-   console.log(a)
+
+    //const dx=await this.check.ispermissionexists(10,'master','product','create')
+    //console.log(dx)
+    const payload ={tenantId:10}
+    return {
+        access_token:await this.jwtservice.sign(payload)
+    }
+    
+
          }
 }
 

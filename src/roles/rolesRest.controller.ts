@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query, Request, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 // import console, { Console } from 'console';
 import { createActionDto } from 'src/dtos/action.dto';
@@ -8,6 +8,7 @@ import { TenantPermissionService } from 'src/tenantpermission/tenantpermission.s
 // import { assignedPermissionDto, createPermissionDto } from 'src/global/permission/permission.dto';
 import { createRoleDto } from '../dtos/role.dto';
 import { RolesService } from './roles.service';
+import { TenantId } from './roles.decorator';
 
 @Controller('roles')
 export class RolesRestController {
@@ -21,8 +22,9 @@ export class RolesRestController {
     }
 //Retrive All roles details  
 @Get('getAll')
-async GetRole(){
-   return await this.roleService.getroles();
+async GetRole(@TenantId() tenantId){
+    // const headers = req.headers
+   return await this.roleService.getroles(tenantId);
 
 //    return re
 }
