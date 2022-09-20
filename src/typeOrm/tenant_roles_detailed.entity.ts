@@ -23,6 +23,9 @@ export class TenantRolesDetailed{
     @Column({type:'integer',name:'tenant_id',nullable:true})
     tenantId:number
 
+    @Column({type:'integer',nullable:true,name:'current_users'})
+    currentUsers:number
+
     @OneToMany(()=>TenantRoles,TenantRole=>TenantRole.tenantRoleDetails)
     tenantRoles:TenantRoles[]
 

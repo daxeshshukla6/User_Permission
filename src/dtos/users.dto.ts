@@ -12,8 +12,11 @@ export class assignroletouser{
   role_id:number
 }
 export class roleToUser{
-user_id:number
+user:number[]
 role:number[]
+}
+export class user{
+  id:number
 }
 export class role{
 id:number

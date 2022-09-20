@@ -34,7 +34,7 @@ import { GrpcMethod } from '@nestjs/microservices';
       @GrpcMethod('RoleManagement','GetUserById')
  async GetUserById(body:{id:number}){
         const res= await this.userService.getuserbyid(body.id)
-        console.log(res)
+        
         return res
       }
       @GrpcMethod('RoleManagement','UpdateUser')

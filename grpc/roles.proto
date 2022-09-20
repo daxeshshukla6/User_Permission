@@ -241,8 +241,9 @@ message GetUserByIdResponse{
         }
         repeated Permissions permissions=1;
     }
+    
     message AssignRoleReq {
-        int32 user_id = 1;
+       repeated int32 user = 1;
         repeated int32 role = 2;
     }
     
