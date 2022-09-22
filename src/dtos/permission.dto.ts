@@ -28,8 +28,8 @@ export class array{
 export class createPermissionDto{ 
     route:string
     subRoute:string
-    productName:string
-    actionName:string
+    productsId:number
+    actionsId:number
 }
 export class Role{
     id:number

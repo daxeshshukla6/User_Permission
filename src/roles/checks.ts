@@ -11,7 +11,7 @@ export class checks{
     constructor(
         @InjectRepository(TenantPermission,'tenant_role_management') private readonly permissionRepo: Repository<TenantPermission>,
         //@InjectRepository(UserActionMaster,'tenant_role_management') private readonly actionRepository: Repository<UserActionMaster>,
-        //@InjectRepository(TenantRolesDetailed,'tenant_role_management') private readonly tenantRoleDetailedRepository:Repository<TenantRolesDetailed>,
+        @InjectRepository(TenantRolesDetailed,'tenant_role_management') private readonly tenantRoleDetailedRepository:Repository<TenantRolesDetailed>,
         @InjectRepository(TenantRoles,'tenant_role_management') private readonly tenantRoleRepository:Repository<TenantRoles>,
         //@InjectRepository(TenantPermission,'tenant_role_management') private readonly tenantPermissionRepo:Repository<TenantPermission>,
         //@InjectDataSource('tenant_role_management') private tenantDataSource: DataSource,
@@ -19,6 +19,7 @@ export class checks{
         private tenantPermission:TenantPermissionService
         
     ) { }   
+    //check permission exists or not 
 async ispermissionexists(roleId:number,routes:string,subroutes:string,actions:string){
     const permission= await this.tenantRoleRepository.find({
         select:{
@@ -76,4 +77,24 @@ async ispermissionexists(roleId:number,routes:string,subroutes:string,actions:st
 //  console.log(x)
 //  return x
  }
+ //check if roleName exists or not 
+async isRoleNameExists(rolename:string,tenantid:number){
+const res= await this.tenantRoleDetailedRepository.find({
+    select:{
+       roleName:true 
+    },
+    where:{
+        roleName:rolename 
+        
+    }
+})
+
+if(res.length===0){
+    return false 
+}
+else{
+    return true 
+}
+
+}
 }

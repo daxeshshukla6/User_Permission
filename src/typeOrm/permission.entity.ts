@@ -18,21 +18,21 @@ route:string
 subRoute:string
 
 
-// @Column()
-// productsId:string
+@Column()
+productsId:number
 
-// @Column()
-// actionsId:string
+@Column()
+actionsId:number
 
 // @Column()
 // fieldsId:string
 
  @ManyToOne(()=>ProductMaster,product=>product.permission)
- @JoinColumn({name:'product_id'})
+ //@JoinColumn({name:'product_id'})
  products :ProductMaster
 
  @ManyToOne(()=>UserActionMaster,action=>action.permissions)
- @JoinColumn({name:'action_id'})
+ //@JoinColumn({name:'action_id'})
   actions :UserActionMaster
 
   // @ManyToOne(()=>FieldMaster,field=>field.permissions)

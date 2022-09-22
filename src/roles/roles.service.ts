@@ -13,6 +13,7 @@ import * as path  from 'path';
 import { checks } from './checks';
 import * as excelReader from 'xlsx'
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/typeOrm';
 
 @Injectable()
 export class RolesService { 
@@ -22,17 +23,25 @@ export class RolesService {
     @InjectRepository(TenantRolesDetailed,'tenant_role_management') private readonly tenantRoleDetailedRepository:Repository<TenantRolesDetailed>,
     @InjectRepository(TenantRoles,'tenant_role_management') private readonly tenantRoleRepository:Repository<TenantRoles>,
     @InjectRepository(TenantPermission,'tenant_role_management') private readonly tenantPermissionRepo:Repository<TenantPermission>,
+    @InjectRepository(User,'tenant_role_management') private readonly userRepo:Repository<User>,
     @InjectDataSource('tenant_role_management') private tenantDataSource: DataSource,
     private jwtservice:JwtService,
     private check:checks
 ) { } 
 //This function is for create role detail 
- createRoleDetail(createRoleDto: createRoleDto) {
+ async createRoleDetail(createRoleDto: createRoleDto) {
+    const roleExist= await this.check.isRoleNameExists(createRoleDto.roleName,createRoleDto.tenantId)
     try{
+        if(roleExist===false){
      const newRole = this.tenantRoleDetailedRepository.create(createRoleDto);
      //console.log(newRole)
+        
      return this.tenantRoleDetailedRepository.save(newRole);
-     
+    }
+    else{
+        return 'Role Name Already exists'
+        
+    }
 
     }catch(e){
         throw new RpcException({message:e.message,status:e.status})
@@ -51,7 +60,8 @@ async getroles(tenantid:number){
         }
     })
    if(!res) throw new RpcException('Roles Not Found')
-  
+   const x=await this.status('Role',5,false)
+   console.log(x)
    return {
     GetRole:res
    }
@@ -184,6 +194,16 @@ async timepass ():Promise<any>{
     
 
          }
+async status(type:string,id:number,status:boolean){
+if(type==='role' || type==='Role'){
+    const res= await this.tenantRoleDetailedRepository.update(id,{roleStatus:status})
+    if(res) console.log('Role status has been deactivated')
+}
+else{
+    const res=await this.userRepo.update(id,{userStatus:status})
+    if(res)console.log('User Has been deActivated')
+}
+}
 }
 
 

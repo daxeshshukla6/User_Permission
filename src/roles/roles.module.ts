@@ -16,9 +16,10 @@ import { PermissionService } from 'src/global/permission/permission.service';
 import { RolesRestController } from './rolesRest.controller';
 import { JwtService, JwtModule } from '@nestjs/jwt';
 import { checks } from './checks';
+import { User } from 'src/typeOrm';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster,TenantRoles,TenantRolesDetailed,TenantPermission],'tenant_role_management'),
+  imports:[TypeOrmModule.forFeature([UserActionMaster,PermissionMaster,ProductMaster,FieldMaster,RoleMaster,RoleDetailedMaster,TenantRoles,TenantRolesDetailed,TenantPermission,User],'tenant_role_management'),
   JwtModule.register({
     secret: 'jwt',
     signOptions: { expiresIn: '60s' },

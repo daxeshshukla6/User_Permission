@@ -14,7 +14,7 @@ import { TenantId } from './roles.decorator';
 export class RolesRestController {
     constructor(private readonly roleService:RolesService,private readonly permissionService:PermissionService,private readonly tenantpermissionService:TenantPermissionService )
     {}
-//Create Role Details 
+//Create Role Details   
     @Post('create')
     async CreateRole(@Body() createRoleDto:createRoleDto){
         const res= await this.roleService.createRoleDetail(createRoleDto)

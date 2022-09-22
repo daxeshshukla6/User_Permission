@@ -21,7 +21,8 @@ export class User {
   @Column({type:'varchar',nullable:true})
   email: string;
 
-  
+  @Column({nullable:true})
+  userStatus:boolean
   
 
   

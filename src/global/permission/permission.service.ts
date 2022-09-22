@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ROUTES } from '@nestjs/core/router/router-module';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { createPermissionDto, Permission } from 'src/dtos/permission.dto';
 import { UserActionMaster } from 'src/typeOrm/action.entity';
+import { PermissionMaster } from 'src/typeOrm/permission.entity';
 import { TenantPermission } from 'src/typeOrm/tenant_permission.entity';
 import { TenantRoles } from 'src/typeOrm/tenant_roles.entity';
 import { TenantRolesDetailed } from 'src/typeOrm/tenant_roles_detailed.entity';
@@ -10,16 +12,16 @@ import { DataSource, Repository } from 'typeorm';
 @Injectable()
 export class PermissionService {
         constructor(
-        @InjectRepository(TenantPermission,'tenant_role_management') private readonly permissionRepo: Repository<TenantPermission>,
+        @InjectRepository(PermissionMaster,'tenant_role_management') private readonly permissionRepo: Repository<TenantPermission>,
         @InjectRepository(UserActionMaster,'tenant_role_management') private readonly actionRepository: Repository<UserActionMaster>,
         @InjectRepository(TenantRolesDetailed,'tenant_role_management') private readonly tenantRoleDetailedRepository:Repository<TenantRolesDetailed>,
         @InjectRepository(TenantRoles,'tenant_role_management') private readonly tenantRoleRepository:Repository<TenantRoles>,
         @InjectRepository(TenantPermission,'tenant_role_management') private readonly tenantPermissionRepo:Repository<TenantPermission>,
         @InjectDataSource('tenant_role_management') private tenantDataSource: DataSource,
     ) { } 
-    async createPermission(createPermissionDto){
+    async createPermission(createPermissionDto:createPermissionDto){
       const newPermission = await this.permissionRepo.create(createPermissionDto);
-       return this.tenantPermissionRepo.save(newPermission);
+       return this.permissionRepo.save(newPermission);
   }
     
     async getPermission(productid:number){

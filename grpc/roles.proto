@@ -32,8 +32,8 @@ message permissionRequest{
   
     string route=1;
     string subRoute=2;
-    string product=3;
-    string action=4; 
+    int32 product=3;
+    int32 action=4; 
 
 
 }
@@ -55,8 +55,8 @@ message permissionResponse{
     int32 id=1;
     string route=2;
     string subRoute=3;
-    string product=4;
-    string action=5;   
+    int32 product=4;
+    int32 action=5;   
     
 }
 
